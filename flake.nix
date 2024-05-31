@@ -17,8 +17,6 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-
-            # TODO replace ryan with your own username
             home-manager.users.andriano = import ./home.nix;
           }
     ./configuration.nix

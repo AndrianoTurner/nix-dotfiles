@@ -14,17 +14,15 @@
     nnn # terminal file manager
 
     #hyprland
-    wofi
-    waybar
-    dunst
     cliphist
+		wl-clipboard
     networkmanagerapplet
     xfce.thunar
     pipewire
     wireplumber
     polkit-kde-agent
-    zsh
-    neovim
+    pavucontrol
+   # neovim
     firefox
     # archives
     zip
@@ -91,6 +89,10 @@
     enable = true;
     userName = "AndrianoTurner";
     userEmail = "danya.shibaev@gmail.com";
+    extraConfig = ''
+    [safe]
+    directory  = /etc/nixos
+    ''; 
   };
 
 
@@ -109,20 +111,76 @@
     };
   };
 
-  programs.wofi = {
-  enable = true;
-  };
-  programs.bash = {
+  programs.zsh = {
     enable = true;
-    enableCompletion = true;
+    oh-my-zsh = {
+     enable = true;
+     theme = "robbyrussell";
+    };
+  };
+  programs.neovim = {
+  enable = true;
+  defaultEditor = true;
+  extraLuaConfig = ''
+  	local opt = vim.opt
+	local g = vim.g
+
+	opt.ignorecase = true
+
+	opt.smartcase = true
+	opt.showmatch = true
+	opt.shiftwidth = 2
+	opt.tabstop = 2
+	opt.smartindent = true
+
+	opt.splitright = true
+	opt.splitbelow = true
+	opt.clipboard = 'unnamedplus'
+	opt.fixeol = false
+	opt.relativenumber = true
+
+  '';
+
   };
   programs.waybar = {
    enable = true;
+   style = ''
+
+   '';
    settings = {
     mainBar = {
     layer = "top";
     position = "top";
-    modules-left = ["sway/workspaces" "sway/mode" "wlr/taskbar"];
+    modules-left = ["hyprland/workspaces"];
+    modules-right = ["tray" "cpu" "network" "pulseaudio" "battery" "clock"];
+    tray = {
+     spacing = 10;
+    };
+    clock = {
+    tooltip-format = "{:%d-%m-%Y | %H:%M}";
+    format-alt = "{:%d-%m-%Y}";
+    format = "{:%a %d-%m-%Y %H:%M}";
+    };
+    cpu = {
+     format = "CPU: {usage}%";
+    };
+    battery = {
+     states = {
+         good = 95;
+	 warning = 30;
+	 critical = 15;
+     };
+     format = "Bat: {capacity}%";
+    };
+    network = {
+     format-wifi = "wifi: {signalStrength}%";
+     format-ethernet = "{ifname}: {ipaddr}/{cidr} ethernet";
+     format-disconnected = "No connection";
+    };
+    pulseaudio = {
+     format = "Vol: {volume}%";
+     on-click = "pavucontrol";
+    };
     };
    };
   };

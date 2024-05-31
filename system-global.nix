@@ -9,11 +9,10 @@
      wget
      wayland
      alacritty
-     hyprpicker
-     hyprpaper
      git
    ];
 
+   programs.zsh.enable = true;
    nixpkgs.config.allowUnfree = true;
    nix.settings = {
    substituters = ["https://hyprland.cachix.org"];

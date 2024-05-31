@@ -1,7 +1,6 @@
 {hyprland,pkgs,...}:{
 
 home.packages = with pkgs; [
- waybar
  swww
 ];
 
@@ -43,7 +42,7 @@ wayland.windowManager.hyprland = {
  bind = $mainMod, P, pseudo
  bind = $mainMod, F, fullscreen
  
- bind = $mainMod, R, exec,wofi --dmenu
+ bind = $mainMod, R, exec,wofi --show run
  bind = $mainMod, E, exec,$file-manager
 
  bindm = $mainMod, mouse:272, movewindow
